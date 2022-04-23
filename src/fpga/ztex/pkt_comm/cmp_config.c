@@ -12,8 +12,8 @@
 #include <sys/time.h>
 #include <errno.h>
 
-#include "../../formats.h"
-#include "../../loader.h"
+#include "../../../formats.h"
+#include "../../../loader.h"
 
 #include "../device_bitstream.h"
 #include "pkt_comm.h"

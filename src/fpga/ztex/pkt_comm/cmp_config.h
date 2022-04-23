@@ -11,7 +11,7 @@
 #ifndef _CMP_CONFIG_H_
 #define _CMP_CONFIG_H_
 
-#include "../../formats.h"
+#include "../../../formats.h"
 
 #define PKT_TYPE_CMP_CONFIG		0x03
 

@@ -117,7 +117,7 @@ static int john_omp_threads_new;
 #include "gpu_common.h"
 #include "opencl_common.h"
 #ifdef HAVE_ZTEX
-#include "ztex_common.h"
+#include "fpga/ztex_common.h"
 #endif
 #ifdef NO_JOHN_BLD
 #define JOHN_BLD "unk-build-type"

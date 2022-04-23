@@ -14,8 +14,8 @@
 #include <string.h>
 #include <libusb-1.0/libusb.h>
 
-#include "../config.h"
-#include "../misc.h"
+#include "../../config.h"
+#include "../../misc.h"
 
 #include "../ztex_common.h"
 #include "ztex.h"

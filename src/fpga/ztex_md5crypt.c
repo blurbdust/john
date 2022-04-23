@@ -20,14 +20,14 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "arch.h"
-#include "common.h"
-#include "formats.h"
-#include "memory.h"
-#include "config.h"
-#include "options.h"
-#include "MD5_std.h"
-#include "md5crypt_common.h"
+#include "../arch.h"
+#include "../common.h"
+#include "../formats.h"
+#include "../memory.h"
+#include "../config.h"
+#include "../options.h"
+#include "../MD5_std.h"
+#include "../md5crypt_common.h"
 
 #include "ztex/device_bitstream.h"
 #include "ztex/device_format.h"

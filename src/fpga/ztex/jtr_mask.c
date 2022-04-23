@@ -8,7 +8,7 @@
  */
 #include <stdlib.h>
 
-#include "../mask_ext.h"
+#include "../../mask_ext.h"
 
 #include "jtr_mask.h"
 #include "pkt_comm/word_gen.h"

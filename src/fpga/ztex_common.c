@@ -7,8 +7,8 @@
  *
  */
 
-#include "list.h"
-#include "options.h"
+#include "../list.h"
+#include "../options.h"
 
 #include "ztex_common.h"
 #include "ztex/ztex_sn.h"

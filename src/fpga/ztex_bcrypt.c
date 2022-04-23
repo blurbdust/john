@@ -16,14 +16,14 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "arch.h"
-#include "common.h"
-#include "formats.h"
-#include "memory.h"
-#include "config.h"
-#include "options.h"
+#include "../arch.h"
+#include "../common.h"
+#include "../formats.h"
+#include "../memory.h"
+#include "../config.h"
+#include "../options.h"
 
-#include "BF_common.h"
+#include "../BF_common.h"
 
 #include "ztex/device_bitstream.h"
 #include "ztex/device_format.h"
@@ -51,7 +51,7 @@
 static struct device_bitstream bitstream = {
 	// bitstream ID (check is performed by querying operating bitstream)
 	0xbc01,
-	"$JOHN/ztex/ztex115y_bcrypt.bit",
+	"$JOHN/fpga/ztex/ztex115y_bcrypt.bit",
 	// parameters for high-speed packet communication (pkt_comm)
 	{ 2, 6144, 8190 },
 	// computing performance estimation (in candidates per interval)

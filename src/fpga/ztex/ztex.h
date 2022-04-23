@@ -16,7 +16,7 @@
 #ifndef _ZTEX_H_
 #define _ZTEX_H_
 
-#include "../list.h"
+#include "../../list.h"
 #include "ztex_sn.h"
 
 #define USB_CMD_TIMEOUT 150

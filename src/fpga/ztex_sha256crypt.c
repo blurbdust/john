@@ -20,12 +20,12 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "arch.h"
-#include "common.h"
-#include "formats.h"
-#include "memory.h"
-#include "config.h"
-#include "options.h"
+#include "../arch.h"
+#include "../common.h"
+#include "../formats.h"
+#include "../memory.h"
+#include "../config.h"
+#include "../options.h"
 
 #include "ztex/device_bitstream.h"
 #include "ztex/device_format.h"
@@ -69,7 +69,7 @@
 static struct device_bitstream bitstream = {
 	// bitstream ID (check is performed by querying operating bitstream)
 	0x256c,
-	"$JOHN/ztex/ztex115y_sha256crypt.bit",
+	"$JOHN/fpga/ztex/ztex115y_sha256crypt.bit",
 	// parameters for high-speed packet communication (pkt_comm)
 	{ 2, 7422, 4094 },
 	// computing performance estimation (in candidates per interval)

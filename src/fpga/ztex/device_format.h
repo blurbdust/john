@@ -12,7 +12,7 @@
  *
  */
 
-#include "../list.h"
+#include "../../list.h"
 
 // (re-)initializes hardware.
 // Saves pointers to 'struct fmt_params', 'struct device_bitstream'.

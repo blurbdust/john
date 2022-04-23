@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../memory.h"
+#include "../../memory.h"
 
 #include "task.h"
 #include "jtr_device.h"

@@ -12,10 +12,10 @@
 
 #include "ztex_sn.h"
 
-#include "../config.h"
-#include "../list.h"
-#include "../misc.h"
-#include "../common.h"
+#include "../../config.h"
+#include "../../list.h"
+#include "../../misc.h"
+#include "../../common.h"
 
 int ztex_sn_is_valid(char *sn)
 {

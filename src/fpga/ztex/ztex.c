@@ -14,8 +14,8 @@
 #include <errno.h>
 #include <libusb-1.0/libusb.h>
 
-#include "../path.h"
-#include "../list.h"
+#include "../../path.h"
+#include "../../list.h"
 
 #include "ztex.h"
 #include "ztex_sn.h"

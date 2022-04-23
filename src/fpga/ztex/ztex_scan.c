@@ -13,8 +13,8 @@
 #include <unistd.h>
 #include <libusb-1.0/libusb.h>
 
-#include "../options.h"
-#include "../list.h"
+#include "../../options.h"
+#include "../../list.h"
 
 #include "../ztex_common.h"
 #include "ztex.h"

@@ -31,10 +31,10 @@ AC_CHECK_HEADER([libusb-1.0/libusb.h],
   [AC_MSG_FAILURE(ZTEX USB-FPGA module requires libusb-1.0.)]
 )
 
-AC_CONFIG_FILES([ztex/Makefile ztex/pkt_comm/Makefile])
+AC_CONFIG_FILES([fpga/ztex/Makefile fpga/ztex/pkt_comm/Makefile])
 
-ZTEX_SUBDIRS="ztex"
-ZTEX_LIBS="ztex/*.o ztex/pkt_comm/*.o -lusb-1.0"
+ZTEX_SUBDIRS="fpga/ztex"
+ZTEX_LIBS="fpga/ztex/*.o fpga/ztex/pkt_comm/*.o -lusb-1.0"
 
 fi
 

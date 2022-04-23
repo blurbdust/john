@@ -11,9 +11,9 @@
 
 #include <sys/time.h>
 
-#include "../loader.h"
-#include "../mask_ext.h"
-#include "../formats.h"
+#include "../../loader.h"
+#include "../../mask_ext.h"
+#include "../../formats.h"
 
 /*
  * Task.

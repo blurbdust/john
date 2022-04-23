@@ -16,12 +16,12 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "arch.h"
-#include "common.h"
-#include "formats.h"
-#include "memory.h"
-#include "config.h"
-#include "options.h"
+#include "../arch.h"
+#include "../common.h"
+#include "../formats.h"
+#include "../memory.h"
+#include "../config.h"
+#include "../options.h"
 
 #include "ztex/device_bitstream.h"
 #include "ztex/device_format.h"
@@ -62,13 +62,13 @@
 // Using valid(), get_binary(), some define's
 // possible TODO: unify get_salt()
 //
-#include "sha512crypt_common.h"
+#include "../sha512crypt_common.h"
 
 
 static struct device_bitstream bitstream = {
 	// bitstream ID (check is performed by querying operating bitstream)
 	0x512c,
-	"$JOHN/ztex/ztex115y_sha512crypt.bit",
+	"$JOHN/fpga/ztex/ztex115y_sha512crypt.bit",
 	// parameters for high-speed packet communication (pkt_comm)
 	{ 2, 6144, 8190 },
 	// computing performance estimation (in candidates per interval)

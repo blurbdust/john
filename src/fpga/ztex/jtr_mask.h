@@ -9,7 +9,7 @@
 #ifndef _JTR_MASK_H_
 #define _JTR_MASK_H_
 
-#include "../mask_ext.h"
+#include "../../mask_ext.h"
 
 /*
  * Functions to access mask data.

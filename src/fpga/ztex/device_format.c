@@ -11,12 +11,12 @@
 #include <sys/time.h>
 #include <assert.h>
 
-#include "../loader.h"
-#include "../formats.h"
-#include "../memory.h"
-#include "../misc.h"
-#include "../options.h"
-#include "../params.h"
+#include "../../loader.h"
+#include "../../formats.h"
+#include "../../memory.h"
+#include "../../misc.h"
+#include "../../options.h"
+#include "../../params.h"
 
 #include "../ztex_common.h"
 #include "jtr_device.h"

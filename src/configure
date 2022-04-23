@@ -14262,11 +14262,11 @@ fi
 
 
 
-ac_config_files="$ac_config_files ztex/Makefile ztex/pkt_comm/Makefile"
+ac_config_files="$ac_config_files fpga/ztex/Makefile fpga/ztex/pkt_comm/Makefile"
 
 
-ZTEX_SUBDIRS="ztex"
-ZTEX_LIBS="ztex/*.o ztex/pkt_comm/*.o -lusb-1.0"
+ZTEX_SUBDIRS="fpga/ztex"
+ZTEX_LIBS="fpga/ztex/*.o fpga/ztex/pkt_comm/*.o -lusb-1.0"
 
 fi
 
@@ -17203,8 +17203,8 @@ for ac_config_target in $ac_config_targets
 do
   case $ac_config_target in
     "autoconfig.h") CONFIG_HEADERS="$CONFIG_HEADERS autoconfig.h" ;;
-    "ztex/Makefile") CONFIG_FILES="$CONFIG_FILES ztex/Makefile" ;;
-    "ztex/pkt_comm/Makefile") CONFIG_FILES="$CONFIG_FILES ztex/pkt_comm/Makefile" ;;
+    "fpga/ztex/Makefile") CONFIG_FILES="$CONFIG_FILES fpga/ztex/Makefile" ;;
+    "fpga/ztex/pkt_comm/Makefile") CONFIG_FILES="$CONFIG_FILES fpga/ztex/pkt_comm/Makefile" ;;
     "arch.h") CONFIG_LINKS="$CONFIG_LINKS arch.h:$ARCH_LINK" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "aes/Makefile") CONFIG_FILES="$CONFIG_FILES aes/Makefile" ;;

@@ -13,12 +13,12 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "arch.h"
-#include "common.h"
-#include "formats.h"
-#include "memory.h"
-#include "options.h"
-#include "DES_std.h"
+#include "../arch.h"
+#include "../common.h"
+#include "../formats.h"
+#include "../memory.h"
+#include "../options.h"
+#include "../DES_std.h"
 
 #include "ztex/device_bitstream.h"
 #include "ztex/device_format.h"
@@ -47,7 +47,7 @@
 struct device_bitstream bitstream = {
 	// bitstream ID (check is performed by querying operating bitstream)
 	0x0101,
-	"$JOHN/ztex/ztex115y_descrypt.bit",
+	"$JOHN/fpga/ztex/ztex115y_descrypt.bit",
 	// parameters for high-speed packet communication (pkt_comm)
 	{ 2, 32768, 2046 },
 	// computing performance estimation (in candidates per interval)

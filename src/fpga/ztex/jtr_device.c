@@ -13,7 +13,7 @@
 #include <libusb-1.0/libusb.h>
 #include <assert.h>
 
-#include "../memory.h"
+#include "../../memory.h"
 
 #include "ztex.h"
 #include "inouttraffic.h"

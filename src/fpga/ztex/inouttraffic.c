@@ -17,7 +17,7 @@
 #include "inouttraffic.h"
 #include "pkt_comm/pkt_comm.h"
 
-#include "../path.h"
+#include "../../path.h"
 
 int DEBUG = 0;
 
