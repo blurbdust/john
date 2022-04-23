@@ -190,7 +190,7 @@ static struct opt_entry opt_list[] = {
 	{"lws", FLG_ONCE, 0, 0, USUAL_REQ_CLR | FLG_STDOUT | OPT_REQ_PARAM, Zu, &options.lws},
 	{"gws", FLG_ONCE, 0, 0, USUAL_REQ_CLR | FLG_STDOUT | OPT_REQ_PARAM, Zu, &options.gws},
 #endif
-#if defined(HAVE_OPENCL) || defined(HAVE_ZTEX)
+#if defined(HAVE_OPENCL) || defined(HAVE_FPGA)
 	{"mask-internal-target", FLG_ONCE, 0, 0, FLG_RULES_STACK_CHK | USUAL_REQ_CLR | FLG_STDOUT | OPT_REQ_PARAM, "%d", &options.req_int_cand_target},
 	{"devices", FLG_ONCE, 0, 0, USUAL_REQ_CLR | FLG_STDOUT | OPT_REQ_PARAM, OPT_FMT_ADD_LIST_MULTI, &options.acc_devices},
 #endif
@@ -374,11 +374,11 @@ FUZZ_USAGE \
 "--force-vector-width=N     Force vector width N\n" \
 "--lws=N                    Force local worksize N\n" \
 "--gws=N                    Force global worksize N\n\n"
-#define JOHN_USAGE_ZTEX \
-"                           or set ZTEX device(s) by its(their) serial number(s)\n"
-#elif defined(HAVE_ZTEX)
-#define JOHN_USAGE_ZTEX \
-"--devices=N[,..]           Set ZTEX device(s) by its(their) serial number(s)\n" \
+#define JOHN_USAGE_FPGA \
+"                           or set FPGA device(s) by its(their) serial number(s)\n"
+#elif defined(HAVE_FPGA)
+#define JOHN_USAGE_FPGA \
+"--devices=N[,..]           Set FPGA device(s) by its(their) serial number(s)\n" \
 "--mask-internal-target=N   Request a specific internal mask target\n"
 #endif
 
@@ -394,8 +394,8 @@ void opt_usage()
 #if defined(HAVE_OPENCL)
 	printf("%s", JOHN_USAGE_GPU);
 #endif
-#if defined(HAVE_ZTEX)
-	printf("%s", JOHN_USAGE_ZTEX);
+#if defined(HAVE_FPGA)
+	printf("%s", JOHN_USAGE_FPGA);
 #endif
 	printf("%s", JOHN_USAGE_FORMAT);
 }
@@ -445,7 +445,7 @@ void opt_init(char *name, int argc, char **argv)
 	list_init(&options.loader.users);
 	list_init(&options.loader.groups);
 	list_init(&options.loader.shells);
-#if defined(HAVE_OPENCL) || defined(HAVE_ZTEX)
+#if defined(HAVE_OPENCL) || defined(HAVE_FPGA)
 	list_init(&options.acc_devices);
 
 	options.req_int_cand_target = -1;

@@ -298,7 +298,7 @@ extern unsigned int password_hash_thresholds[PASSWORD_HASH_SIZES];
 #define SINGLE_KEYS_UTYPE		uint32_t
 #define SINGLE_IDX_MAX			(INT32_MAX + 1U)
 #define SINGLE_BUF_MAX			UINT32_MAX
-#elif _OPENMP || HAVE_ZTEX
+#elif _OPENMP || HAVE_FPGA
 /* Max. 32K KPC. Roughly half the memory footprint compared to the above. */
 #define SINGLE_KEYS_TYPE		int16_t
 #define SINGLE_KEYS_UTYPE		uint32_t
@@ -380,7 +380,7 @@ extern unsigned int password_hash_thresholds[PASSWORD_HASH_SIZES];
 /*
  * Maximum number of GECOS words to try in pairs. This is automagically
  * increased when using global seed words, and/or when running accelerated
- * formats (OpenCL, ZTEX) or OpenMP with many threads.
+ * formats (OpenCL, FPGA) or OpenMP with many threads.
  */
 #define SINGLE_WORDS_PAIR_MAX		6
 

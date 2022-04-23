@@ -7,8 +7,8 @@
  *
  */
 
-#ifndef _ZTEX_COMMON_H_
-#define _ZTEX_COMMON_H_
+#ifndef _FPGA_COMMON_H_
+#define _FPGA_COMMON_H_
 
 /*
  * List of boards detected at initialization.

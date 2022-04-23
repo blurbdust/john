@@ -49,12 +49,12 @@ static int orig_max_len, orig_min_kpc;
 static int stacked_rule_count = 1;
 static rule_stack single_rule_stack;
 
-#if HAVE_OPENCL || HAVE_ZTEX
+#if HAVE_OPENCL || HAVE_FPGA
 static int acc_fmt, prio_resume;
 #if HAVE_OPENCL
 static int ocl_fmt;
 #endif /* HAVE_OPENCL */
-#endif /* HAVE_OPENCL || HAVE_ZTEX */
+#endif /* HAVE_OPENCL || HAVE_FPGA */
 
 static int single_disabled_recursion;
 
@@ -157,11 +157,12 @@ static void single_init(void)
 	int lim_kpc, max_buffer_GB;
 	int64_t my_buf_share;
 
-#if HAVE_OPENCL || HAVE_ZTEX
+#if HAVE_OPENCL || HAVE_FPGA
 	prio_resume = cfg_get_bool(SECTION_OPTIONS, NULL, "SinglePrioResume", 0);
 
 	acc_fmt = strcasestr(single_db->format->params.label, "-opencl") ||
 		strcasestr(single_db->format->params.label, "-ztex");
+		// TODO: add tinyfpga here
 #endif
 #if HAVE_OPENCL
 	ocl_fmt = acc_fmt && strcasestr(single_db->format->params.label, "-opencl");
@@ -438,7 +439,7 @@ static void single_init(void)
 	          ? " (per local process)" : "");
 	else
 		log_event("- SingleMaxBufferSize = unlimited");
-#if HAVE_OPENCL || HAVE_ZTEX
+#if HAVE_OPENCL || HAVE_FPGA
 	log_event("- SinglePrioResume = %s", prio_resume ?
 	          "Y (prioritize resumability over speed)" :
 	          "N (prioritize speed over resumability)");
@@ -770,7 +771,7 @@ next:
 		last = &pw->next;
 	} while ((pw = pw->next));
 
-#if HAVE_OPENCL || HAVE_ZTEX
+#if HAVE_OPENCL || HAVE_FPGA
 	if (!acc_fmt || prio_resume)
 #endif
 	if (keys->count && tot_rule_no - tot_rule_now > (key_count << 1))

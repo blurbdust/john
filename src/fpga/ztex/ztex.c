@@ -19,7 +19,7 @@
 
 #include "ztex.h"
 #include "ztex_sn.h"
-#include "../ztex_common.h"
+#include "../fpga_common.h"
 
 //===============================================================
 //

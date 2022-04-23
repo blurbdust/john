@@ -758,6 +758,7 @@ AGAIN:
 		if ((format->params.flags & FMT_DYNAMIC) ||
 		    strstr(format->params.label, "-opencl") ||
 		    strstr(format->params.label, "-ztex") ||
+		// TODO: add check for tinyfpga
 		    !strcmp(format->params.label, "crypt")) {
 #ifdef HAVE_OPENCL
 /*
@@ -800,7 +801,7 @@ AGAIN:
 		if ((options.flags & FLG_LOOPTEST_CHK) && john_main_process)
 			printf("#%u ", loop_total);
 #endif
-#if defined(HAVE_OPENCL) || defined(HAVE_ZTEX)
+#if defined(HAVE_OPENCL) || defined(HAVE_FPGA)
 		int using_int_mask = (format->params.flags & FMT_MASK) && (options.flags & FLG_MASK_CHK) &&
 			options.req_int_cand_target != 0 && mask_int_cand_target;
 #elif !defined(BENCH_BUILD)

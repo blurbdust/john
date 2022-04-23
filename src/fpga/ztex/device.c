@@ -17,7 +17,7 @@
 #include "../../config.h"
 #include "../../misc.h"
 
-#include "../ztex_common.h"
+#include "../fpga_common.h"
 #include "ztex.h"
 #include "inouttraffic.h"
 #include "ztex_scan.h"

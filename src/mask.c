@@ -2150,7 +2150,7 @@ void mask_init(struct db_main *db, char *unprocessed_mask)
 	mask_fmt = db->format;
 	mask_bench_index = 0;
 
-#if defined(HAVE_OPENCL) || defined(HAVE_ZTEX)
+#if defined(HAVE_OPENCL) || defined(HAVE_FPGA)
 	/* Disable internal mask */
 	if (options.req_int_cand_target == 0) {
 		if (mask_int_cand_target)
@@ -2439,7 +2439,7 @@ static void finalize_mask(int len)
 			log_event("- Disabling internal mask due to stacked rules");
 		}
 	}
-#if defined(HAVE_OPENCL) || defined(HAVE_ZTEX)
+#if defined(HAVE_OPENCL) || defined(HAVE_FPGA)
 	else if ((mask_fmt->params.flags & FMT_MASK) && options.req_int_cand_target > 0) {
 		log_event("- Overriding format's target internal mask factor of %d with user requested %d",
 		          mask_int_cand_target, options.req_int_cand_target);

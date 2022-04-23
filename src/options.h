@@ -421,7 +421,7 @@ struct options_main {
 /* GPU Worksizes */
 	size_t lws, gws;
 #endif
-#if defined(HAVE_OPENCL) || defined(HAVE_ZTEX)
+#if defined(HAVE_OPENCL) || defined(HAVE_FPGA)
 /* Allow to set and select OpenCL device(s) or ztex boards */
 	struct list_main *acc_devices;
 #endif
@@ -457,7 +457,7 @@ struct options_main {
 	int crack_status;
 /* --catch-up=oldsession */
 	char *catchup;
-#if defined(HAVE_OPENCL) || defined(HAVE_ZTEX)
+#if defined(HAVE_OPENCL) || defined(HAVE_FPGA)
 /* --mask-internal-target=N */
 	int req_int_cand_target;
 #endif

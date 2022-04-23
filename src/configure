@@ -643,8 +643,8 @@ CC_ASM_OBJS
 CC_MAIN_CPU
 CC_CPU
 LIBOBJS
-ZTEX_LIBS
-ZTEX_SUBDIRS
+FPGA_LIBS
+FPGA_SUBDIRS
 CL_LIBS
 CL_CFLAGS
 PTHREAD_CFLAGS
@@ -775,7 +775,7 @@ enable_fuzz
 enable_libfuzzer
 enable_openmp
 enable_opencl
-enable_ztex
+enable_fpga
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1412,7 +1412,7 @@ Optional Features:
   --enable-libfuzzer      Fuzzing using libFuzzer
   --disable-openmp        do not use OpenMP
   --disable-opencl        do not use OpenCL
-  --enable-ztex           Support ZTEX USB-FPGA module 1.15y
+  --enable-fpga           Support FPGAs, currently only ZTEX USB-FPGA module 1.15y
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
@@ -3386,7 +3386,7 @@ ac_config_headers="$ac_config_headers autoconfig.h"
 
 
 #
-# AX_ZTEX
+# AX_FPGA
 #
 # This software is Copyright (c) 2016 Denis Burykin
 # [denis_burykin yahoo com], [denis-burykin2014 yandex ru]
@@ -14186,18 +14186,18 @@ fi
 
 
 
-# Check whether --enable-ztex was given.
-if test "${enable_ztex+set}" = set; then :
-  enableval=$enable_ztex; ztex=$enableval
+# Check whether --enable-fpga was given.
+if test "${enable_fpga+set}" = set; then :
+  enableval=$enable_fpga; fpga=$enableval
 else
-  ztex=no
+  fpga=no
 fi
 
 
-ZTEX_SUBDIRS=""
-ZTEX_LIBS=""
+FPGA_SUBDIRS=""
+FPGA_LIBS=""
 
-if test "x$ztex" = xyes; then
+if test "x$fpga" = xyes; then
 
 ac_fn_c_check_header_mongrel "$LINENO" "libusb-1.0/libusb.h" "ac_cv_header_libusb_1_0_libusb_h" "$ac_includes_default"
 if test "x$ac_cv_header_libusb_1_0_libusb_h" = xyes; then :
@@ -14247,7 +14247,7 @@ _ACEOF
 else
   { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
 $as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
-as_fn_error $? "ZTEX USB-FPGA module requires libusb-1.0.
+as_fn_error $? "FPGA module requires libusb-1.0.
 See \`config.log' for more details" "$LINENO" 5; }
 
 fi
@@ -14255,7 +14255,7 @@ fi
 else
   { { $as_echo "$as_me:${as_lineno-$LINENO}: error: in \`$ac_pwd':" >&5
 $as_echo "$as_me: error: in \`$ac_pwd':" >&2;}
-as_fn_error $? "ZTEX USB-FPGA module requires libusb-1.0.
+as_fn_error $? "FPGA module requires libusb-1.0.
 See \`config.log' for more details" "$LINENO" 5; }
 
 fi
@@ -14265,8 +14265,8 @@ fi
 ac_config_files="$ac_config_files fpga/ztex/Makefile fpga/ztex/pkt_comm/Makefile"
 
 
-ZTEX_SUBDIRS="fpga/ztex"
-ZTEX_LIBS="fpga/ztex/*.o fpga/ztex/pkt_comm/*.o -lusb-1.0"
+FPGA_SUBDIRS="fpga/ztex"
+FPGA_LIBS="fpga/ztex/*.o fpga/ztex/pkt_comm/*.o -lusb-1.0"
 
 fi
 
@@ -18034,7 +18034,7 @@ Non-free unrar code (complete RAR support) ......... ${unrar_files}
 librexgen (regex mode, see doc/README.librexgen) ... ${using_rexgen}
 OpenMPI support (default disabled) ................. ${using_mpi}
 Experimental code (default disabled) ............... ${experimental}
-ZTEX USB-FPGA module 1.15y support ................. ${ztex}
+FPGA module support ................................ ${fpga}
 
 EOF
 if test "$ubsan" != "disabled" || test "$asan" != "disabled" ||

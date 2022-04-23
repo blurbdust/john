@@ -18,7 +18,7 @@
 #include "../../options.h"
 #include "../../params.h"
 
-#include "../ztex_common.h"
+#include "../fpga_common.h"
 #include "jtr_device.h"
 #include "task.h"
 #include "jtr_mask.h"

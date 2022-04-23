@@ -116,8 +116,8 @@ static int john_omp_threads_new;
 #include "unicode.h"
 #include "gpu_common.h"
 #include "opencl_common.h"
-#ifdef HAVE_ZTEX
-#include "fpga/ztex_common.h"
+#ifdef HAVE_FPGA
+#include "fpga/fpga_common.h"
 #endif
 #ifdef NO_JOHN_BLD
 #define JOHN_BLD "unk-build-type"
@@ -156,7 +156,8 @@ extern struct fmt_main fmt_crypt;
 extern struct fmt_main fmt_trip;
 extern struct fmt_main fmt_dummy;
 extern struct fmt_main fmt_NT;
-#ifdef HAVE_ZTEX
+#ifdef HAVE_FPGA
+// TODO: add tinyfpga formats
 extern struct fmt_main fmt_ztex_descrypt;
 extern struct fmt_main fmt_ztex_bcrypt;
 extern struct fmt_main fmt_ztex_sha512crypt;
@@ -234,8 +235,9 @@ static void john_register_all(void)
 		}
 	}
 
-	/* Let ZTEX formats appear before CPU formats */
-#ifdef HAVE_ZTEX
+	/* Let FPGA formats appear before CPU formats */
+#ifdef HAVE_FPGA
+	// TODO: add tinyfpga formats
 	john_register_one(&fmt_ztex_descrypt);
 	john_register_one(&fmt_ztex_bcrypt);
 	john_register_one(&fmt_ztex_sha512crypt);
@@ -400,6 +402,7 @@ static void john_omp_show_info(void)
 #endif
 	if (database.format && database.format->params.label &&
 	        !strstr(database.format->params.label, "-opencl") &&
+		// TODO: add tinyfpga format
 	        !strstr(database.format->params.label, "-ztex"))
 	if (!options.fork && john_omp_threads_orig > 1 &&
 	    database.format && database.format != &dummy_format &&
@@ -573,8 +576,9 @@ static void john_fork(void)
 				fmt_init(database.format);
 			}
 #endif
-#if HAVE_ZTEX
+#if HAVE_FPGA
 			if (strstr(database.format->params.label, "-ztex")) {
+				// TODO: add tinyfpga format, change functions to fpga
 				list_init(&ztex_use_list);
 				list_extract_list(ztex_use_list, ztex_detected_list,
 					i * ztex_devices_per_fork, ztex_devices_per_fork);
@@ -600,8 +604,9 @@ static void john_fork(void)
 		fmt_init(database.format);
 	}
 #endif
-#if HAVE_ZTEX
+#if HAVE_FPGA
 	if (strstr(database.format->params.label, "-ztex")) {
+		// TODO: update for tinyfpga stuff
 		list_init(&ztex_use_list);
 		list_extract_list(ztex_use_list, ztex_detected_list,
 			0, ztex_devices_per_fork);
@@ -1154,14 +1159,15 @@ static void john_load(void)
 				log_event("%s", john_loaded_counts(&database,
 				                                   "Loaded a total of"));
 			}
-			/* only allow --device for OpenCL or ZTEX formats */
-#if HAVE_OPENCL || HAVE_ZTEX
+			/* only allow --device for OpenCL or FPGA formats */
+#if HAVE_OPENCL || HAVE_FPGA
 			if (options.acc_devices->count &&
 			  !(strstr(database.format->params.label, "-opencl") ||
 			    strstr(database.format->params.label, "-ztex"))) {
+				// TODO: add tinyfpga check
 				if (john_main_process)
 					fprintf(stderr,
-					        "The \"--devices\" option is valid only for OpenCL or ZTEX formats\n");
+					        "The \"--devices\" option is valid only for OpenCL or FPGA formats\n");
 				error();
 			}
 #endif
@@ -1189,17 +1195,19 @@ static void john_load(void)
 			}
 #endif
 
-#if HAVE_ZTEX
+#if HAVE_FPGA
 			if (strstr(database.format->params.label, "-ztex")
+					// TODO: add tinyfpga check
 					&& options.fork) {
+				// TODO: chnage functions to fpga
 				if (ztex_detected_list->count == 1) {
-					fprintf(stderr, "Number of ZTEX devices must be "
+					fprintf(stderr, "Number of FPGA devices must be "
 						"a multiple of forks. "
 						"With 1 device \"--fork\" is useless.\n");
 					error();
 				}
 				if (ztex_detected_list->count % options.fork) {
-					fprintf(stderr, "Number of ZTEX devices must be "
+					fprintf(stderr, "Number of FPGA devices must be "
 						"a multiple of forks. "
 						"Suggesting to use \"--fork=%d\".\n",
 						ztex_detected_list->count);

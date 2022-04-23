@@ -47,8 +47,9 @@
 #define OCL_STRING ""
 #endif
 
-#if HAVE_ZTEX
+#if HAVE_FPGA
 #define ZTEX_STRING " ZTEX"
+// TODO: add tinyfpga here
 #else
 #define ZTEX_STRING ""
 #endif

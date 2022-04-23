@@ -39,7 +39,7 @@ PEFLAGS = peflags --dynamicbase=true --nxcompat=true
 SHELL = /bin/sh
 VPATH = @srcdir@
 
-subdirs = aes secp256k1 ed25519-donna poly1305-donna @ZTEX_SUBDIRS@
+subdirs = aes secp256k1 ed25519-donna poly1305-donna @FPGA_SUBDIRS@
 top_srcdir = @top_srcdir@
 srcdir = @srcdir@
 prefix = @prefix@
@@ -128,7 +128,7 @@ OCL_OBJS = opencl_common.o opencl_dynamic_loader.o opencl_autotune.o bt.o bt_has
 
 OPENCL_PLUGFORMATS_OBJS = @OPENCL_PLUGFORMATS_OBJS@
 
-ZTEX_OBJS = fpga/ztex_descrypt.o fpga/ztex_bcrypt.o fpga/ztex_sha512crypt.o fpga/ztex_drupal7.o fpga/ztex_sha256crypt.o fpga/ztex_md5crypt.o fpga/ztex_phpass.o fpga/ztex_common.o
+FPGA_OBJS = fpga/ztex_descrypt.o fpga/ztex_bcrypt.o fpga/ztex_sha512crypt.o fpga/ztex_drupal7.o fpga/ztex_sha256crypt.o fpga/ztex_md5crypt.o fpga/ztex_phpass.o fpga/fpga_common.o
 
 FUZZ_OBJS = fuzz.o
 
@@ -160,11 +160,11 @@ CL_DEVICE_HEADER = ../run/opencl/opencl_device_info.h
 CL_COMMON_HEADER = opencl_common.h gpu_common.h gpu_sensors.h
 endif
 
-WITH_ZTEX=@ZTEX_LIBS@
-ifdef WITH_ZTEX
-CFLAGS += -DHAVE_ZTEX
-CFLAGS_MAIN += -DHAVE_ZTEX
-JOHN_OBJS += $(ZTEX_OBJS)
+WITH_FPGA=@FPGA_LIBS@
+ifdef WITH_FPGA
+CFLAGS += -DHAVE_FPGA
+CFLAGS_MAIN += -DHAVE_FPGA
+JOHN_OBJS += $(FPGA_OBJS)
 endif
 
 WITH_FUZZ=@HAVE_FUZZ@
@@ -560,7 +560,7 @@ find_version:
 	echo "#define JTR_GIT_VERSION $(JTR_GIT_VERSION)" > version.h.new
 	diff >/dev/null 2>/dev/null version.h.new version.h && $(RM) version.h.new || $(MV) version.h.new version.h
 
-SUBDIRS = aes secp256k1 ed25519-donna poly1305-donna @ZTEX_SUBDIRS@
+SUBDIRS = aes secp256k1 ed25519-donna poly1305-donna @FPGA_SUBDIRS@
 
 .PHONY: subdirs $(SUBDIRS) find_version
 
@@ -600,8 +600,8 @@ poly1305-donna/poly1305-donna.a:
 
 # PTHREAD_CFLAGS and OPENMP_CFLAGS may actually contain linker options,
 # like -fopenmp
-../run/john@EXE_EXT@: $(JOHN_OBJS) aes/aes.a secp256k1/secp256k1.a ed25519-donna/ed25519-donna.a poly1305-donna/poly1305-donna.a @ZTEX_SUBDIRS@
-	$(LD) $(JOHN_OBJS) $(LDFLAGS) @OPENSSL_LIBS@ @OPENMP_CFLAGS@ @GMP_LIBS@ @SKEY_LIBS@ @REXGEN_LIBS@ @CL_LIBS@ @PTHREAD_CFLAGS@ @PTHREAD_LIBS@ @M_LIBS@ @RT_LIBS@ @Z_LIBS@ @DL_LIBS@ @CRYPT_LIBS@ @BZ2_LIBS@ @ZTEX_LIBS@ aes/aes.a secp256k1/secp256k1.a ed25519-donna/ed25519-donna.a poly1305-donna/poly1305-donna.a -o $@
+../run/john@EXE_EXT@: $(JOHN_OBJS) aes/aes.a secp256k1/secp256k1.a ed25519-donna/ed25519-donna.a poly1305-donna/poly1305-donna.a @FPGA_SUBDIRS@
+	$(LD) $(JOHN_OBJS) $(LDFLAGS) @OPENSSL_LIBS@ @OPENMP_CFLAGS@ @GMP_LIBS@ @SKEY_LIBS@ @REXGEN_LIBS@ @CL_LIBS@ @PTHREAD_CFLAGS@ @PTHREAD_LIBS@ @M_LIBS@ @RT_LIBS@ @Z_LIBS@ @DL_LIBS@ @CRYPT_LIBS@ @BZ2_LIBS@ @FPGA_LIBS@ aes/aes.a secp256k1/secp256k1.a ed25519-donna/ed25519-donna.a poly1305-donna/poly1305-donna.a -o $@
 
 ../run/unshadow: ../run/john
 	$(RM) ../run/unshadow

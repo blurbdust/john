@@ -73,11 +73,12 @@ char fmt_class_list[] = "all, enabled, disabled"
 #if _OPENMP
 	", omp"
 #endif
-#if HAVE_OPENCL || HAVE_ZTEX
+#if HAVE_OPENCL || HAVE_FPGA
 	", mask"
 #endif
-#if HAVE_ZTEX
-	", ztex"
+// TODO: might have add tinyfpga stuff here?
+#if HAVE_FPGA
+	", fpga, ztex"
 #endif
 #if HAVE_OPENCL
 	", opencl, vector"
@@ -93,6 +94,7 @@ int fmt_is_class(char *name)
 	                 !strcasecmp(name , "omp") ||
 	                 !strcasecmp(name , "mask") ||
 	                 !strcasecmp(name , "ztex") ||
+			// TODO: add tinyfpg check here
 	                 !strcasecmp(name , "opencl") || !strcasecmp(name , "vector") ||
 	                 !strcasecmp(name , "dynamic") ||
 	                 !strcasecmp(name , "cpu")));
@@ -179,12 +181,14 @@ int fmt_match(const char *req_format, struct fmt_main *format, int override_disa
 
 	if (!strcasecmp(req_format, "cpu"))
 		return enabled && !(strstr(format->params.label, "-opencl") || strstr(format->params.label, "-ztex"));
+	// TODO: add tinyfpga in the line above
 
 	if (!strcasecmp(req_format, "opencl"))
 		return enabled && strstr(format->params.label, "-opencl");
 
 	if (!strcasecmp(req_format, "ztex"))
 		return enabled && strstr(format->params.label, "-ztex");
+	// TODO: add tinyfpga in the line above
 
 	if (!strcasecmp(req_format, "mask"))
 		return enabled && (format->params.flags & FMT_MASK);
