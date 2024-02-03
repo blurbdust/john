@@ -56,3 +56,10 @@ void ztex_init()
 	ztex_use_list = ztex_detected_list;
 	ztex_initialized = 1;
 }
+
+void ulx3s_init()
+{
+	int found_error = 0;
+	fprintf(stderr, "Error: we actually hit this\n");
+	found_error = 1;
+}

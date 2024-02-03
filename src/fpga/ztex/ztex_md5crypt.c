@@ -20,19 +20,19 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../arch.h"
-#include "../common.h"
-#include "../formats.h"
-#include "../memory.h"
-#include "../config.h"
-#include "../options.h"
-#include "../MD5_std.h"
-#include "../md5crypt_common.h"
+#include "../../arch.h"
+#include "../../common.h"
+#include "../../formats.h"
+#include "../../memory.h"
+#include "../../config.h"
+#include "../../options.h"
+#include "../../MD5_std.h"
+#include "../../md5crypt_common.h"
 
-#include "ztex/device_bitstream.h"
-#include "ztex/device_format.h"
-#include "ztex/task.h"
-#include "ztex/pkt_comm/cmp_config.h"
+#include "device_bitstream.h"
+#include "device_format.h"
+#include "task.h"
+#include "pkt_comm/cmp_config.h"
 
 
 #define FORMAT_LABEL		"md5crypt-ztex"
@@ -61,7 +61,7 @@
 static struct device_bitstream bitstream = {
 	// bitstream ID (check is performed by querying operating bitstream)
 	0xd5c0,
-	"$JOHN/ztex/ztex115y_md5crypt.bit",
+	"$JOHN/fpga/ztex/ztex115y_md5crypt.bit",
 	// parameters for high-speed packet communication (pkt_comm)
 	{ 2, 14336, 4094 },
 	// computing performance estimation (in candidates per interval)

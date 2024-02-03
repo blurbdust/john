@@ -643,8 +643,10 @@ CC_ASM_OBJS
 CC_MAIN_CPU
 CC_CPU
 LIBOBJS
-FPGA_LIBS
-FPGA_SUBDIRS
+ZTEX_LIBS
+ULX3S_LIBS
+ZTEX_SUBDIRS
+ULX3S_SUBDIRS
 CL_LIBS
 CL_CFLAGS
 PTHREAD_CFLAGS
@@ -3394,7 +3396,7 @@ ac_config_headers="$ac_config_headers autoconfig.h"
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted.
 #
-# If configured to support ZTEX USB-FPGA module with --enable-ztex=yes:
+# If configured to support ZTEX USB-FPGA module with --enable-fpga=yes|ztex|ulx3s:
 # - check for headers and libraries
 # - add Makefiles
 # - set ZTEX_SUBDIRS, ZTEX_LIBS
@@ -14194,10 +14196,12 @@ else
 fi
 
 
-FPGA_SUBDIRS=""
-FPGA_LIBS=""
+ZTEX_SUBDIRS=""
+ULX3S_SUBDIRS=""
+ZTEX_LIBS=""
+ULX3S_LIBS=""
 
-if test "x$fpga" = xyes; then
+if test "x$fpga" = xyes -o "x$fpga" = xztex -o "x$fpga" = xulx3s; then
 
 ac_fn_c_check_header_mongrel "$LINENO" "libusb-1.0/libusb.h" "ac_cv_header_libusb_1_0_libusb_h" "$ac_includes_default"
 if test "x$ac_cv_header_libusb_1_0_libusb_h" = xyes; then :
@@ -14260,13 +14264,25 @@ See \`config.log' for more details" "$LINENO" 5; }
 
 fi
 
-
+if test "x$fpga" = xyes -o "x$fpga" = xztex; then
 
 ac_config_files="$ac_config_files fpga/ztex/Makefile fpga/ztex/pkt_comm/Makefile"
 
 
-FPGA_SUBDIRS="fpga/ztex"
-FPGA_LIBS="fpga/ztex/*.o fpga/ztex/pkt_comm/*.o -lusb-1.0"
+ZTEX_SUBDIRS="fpga/ztex"
+ZTEX_LIBS="fpga/ztex/device.o fpga/ztex/device_format.o fpga/ztex/inouttraffic.o fpga/ztex/jtr_device.o fpga/ztex/jtr_mask.o fpga/ztex/task.o fpga/ztex/ztex.o fpga/ztex/ztex_scan.o fpga/ztex/ztex_sn.o fpga/ztex/pkt_comm/*.o -lusb-1.0"
+
+fi
+
+if test "x$fpga" = xulx3s; then
+
+ac_config_files="$ac_config_files fpga/ulx3s/Makefile fpga/ulx3s/pkt_comm/Makefile"
+
+
+ULX3S_SUBDIRS="fpga/ulx3s"
+ULX3S_LIBS="fpga/ulx3s/*.o fpga/ulx3s/pkt_comm/*.o -lusb-1.0"
+fi
+   
 
 fi
 
@@ -17205,6 +17221,8 @@ do
     "autoconfig.h") CONFIG_HEADERS="$CONFIG_HEADERS autoconfig.h" ;;
     "fpga/ztex/Makefile") CONFIG_FILES="$CONFIG_FILES fpga/ztex/Makefile" ;;
     "fpga/ztex/pkt_comm/Makefile") CONFIG_FILES="$CONFIG_FILES fpga/ztex/pkt_comm/Makefile" ;;
+    "fpga/ulx3s/Makefile") CONFIG_FILES="$CONFIG_FILES fpga/ulx3s/Makefile" ;;
+    "fpga/ulx3s/Makefile") CONFIG_FILES="$CONFIG_FILES fpga/ulx3s/pkt_comm/Makefile" ;;
     "arch.h") CONFIG_LINKS="$CONFIG_LINKS arch.h:$ARCH_LINK" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "aes/Makefile") CONFIG_FILES="$CONFIG_FILES aes/Makefile" ;;

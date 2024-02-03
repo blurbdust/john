@@ -20,17 +20,17 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../arch.h"
-#include "../common.h"
-#include "../formats.h"
-#include "../memory.h"
-#include "../config.h"
-#include "../options.h"
+#include "../../arch.h"
+#include "../../common.h"
+#include "../../formats.h"
+#include "../../memory.h"
+#include "../../config.h"
+#include "../../options.h"
 
-#include "ztex/device_bitstream.h"
-#include "ztex/device_format.h"
-#include "ztex/task.h"
-#include "ztex/pkt_comm/cmp_config.h"
+#include "device_bitstream.h"
+#include "device_format.h"
+#include "task.h"
+#include "pkt_comm/cmp_config.h"
 
 
 #define FORMAT_LABEL		"sha256crypt-ztex"

@@ -43,7 +43,7 @@ m4_include([m4/jtr_arm_logic.m4])
 m4_include([m4/jtr_generic_logic.m4])
 m4_include([m4/jtr_systems_specific_logic.m4])
 m4_include([m4/jtr_utility_macros.m4])
-m4_include([m4/ax_ztex.m4])
+m4_include([m4/ax_fpga.m4])
 
 dnl Define precious variables. They get included in --help and need no AC_SUBST
 AC_ARG_VAR([CFLAGS_EXTRA], [additional CFLAGS for -Woptions and other things, not used during ./configure but put in resulting Makefile])
@@ -743,8 +743,8 @@ else
    HAVE_OPENCL=-DHAVE_OPENCL
 fi
 
-dnl ZTEX USB-FPGA module support (if --enable-ztex=yes)
-AX_ZTEX
+dnl FPGA module support (if --enable-fpga=yes|ztex|ulx3s)
+AX_FPGA
 
 dnl Checks for header files.
 dnl Eg. if sys/times.h is found, the below will define HAVE_SYS_TIMES_H
@@ -1285,7 +1285,7 @@ Non-free unrar code (complete RAR support) ......... ${unrar_files}
 librexgen (regex mode, see doc/README.librexgen) ... ${using_rexgen}
 OpenMPI support (default disabled) ................. ${using_mpi}
 Experimental code (default disabled) ............... ${experimental}
-ZTEX USB-FPGA module 1.15y support ................. ${ztex}
+FPGA module support ................................ ${fpga}
 
 EOF
 dnl === this section is NOT output, unless there is some debugging flag enabled.

@@ -156,7 +156,7 @@ extern struct fmt_main fmt_crypt;
 extern struct fmt_main fmt_trip;
 extern struct fmt_main fmt_dummy;
 extern struct fmt_main fmt_NT;
-#ifdef HAVE_FPGA
+#ifdef HAVE_FPGA_ZTEX
 // TODO: add tinyfpga formats
 extern struct fmt_main fmt_ztex_descrypt;
 extern struct fmt_main fmt_ztex_bcrypt;
@@ -165,6 +165,9 @@ extern struct fmt_main fmt_ztex_drupal7;
 extern struct fmt_main fmt_ztex_sha256crypt;
 extern struct fmt_main fmt_ztex_md5crypt;
 extern struct fmt_main fmt_ztex_phpass;
+#endif
+#ifdef HAVE_FPGA_ULX3S
+extern struct fmt_main fmt_ulx3s_descrypt;
 #endif
 
 #include "fmt_externs.h"
@@ -236,7 +239,7 @@ static void john_register_all(void)
 	}
 
 	/* Let FPGA formats appear before CPU formats */
-#ifdef HAVE_FPGA
+#ifdef HAVE_FPGA_ZTEX
 	// TODO: add tinyfpga formats
 	john_register_one(&fmt_ztex_descrypt);
 	john_register_one(&fmt_ztex_bcrypt);
@@ -245,6 +248,9 @@ static void john_register_all(void)
 	john_register_one(&fmt_ztex_sha256crypt);
 	john_register_one(&fmt_ztex_md5crypt);
 	john_register_one(&fmt_ztex_phpass);
+#endif
+#ifdef HAVE_FPGA_ULX3S
+	john_register_one(&fmt_ulx3s_descrypt);
 #endif
 	john_register_one(&fmt_DES);
 	john_register_one(&fmt_BSDI);
@@ -576,7 +582,7 @@ static void john_fork(void)
 				fmt_init(database.format);
 			}
 #endif
-#if HAVE_FPGA
+#if HAVE_FPGA_ZTEX
 			if (strstr(database.format->params.label, "-ztex")) {
 				// TODO: add tinyfpga format, change functions to fpga
 				list_init(&ztex_use_list);

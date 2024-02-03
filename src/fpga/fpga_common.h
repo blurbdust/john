@@ -32,4 +32,6 @@ extern int ztex_fork_num;
  */
 void ztex_init();
 
+void ulx3s_init();
+
 #endif
