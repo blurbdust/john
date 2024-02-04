@@ -15,14 +15,18 @@
  * --dev command-line option applies.
  */
 extern struct list_main *ztex_detected_list;
+extern struct list_main *ulx3s_detected_list;
 
 /*
  * List of boards for use in current fork.
  */
 extern struct list_main *ztex_use_list;
+extern struct list_main *ulx3s_use_list;
 
 extern int ztex_devices_per_fork;
+extern int ulx3s_devices_per_fork;
 extern int ztex_fork_num;
+extern int ulx3s_fork_num;
 
 /*
  * The function is to be called on the access to ZTEX formats.

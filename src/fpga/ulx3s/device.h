@@ -26,7 +26,7 @@ struct device_list *device_init_scan(struct device_bitstream *bitstream);
 
 // - Scans for new devices when program is running
 // - *device_list argument points at devices already operated (to skip them)
-// - Invoked timely, actual scan occurs as often as defined in ztex_scan.h
+// - Invoked timely, actual scan occurs as often as defined in ulx3s_scan.h
 // - Initializes devices
 // - Uploads specified bitstream
 // - Returns list of newly found and initialized devices.

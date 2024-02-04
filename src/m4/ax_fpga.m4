@@ -34,7 +34,7 @@ AC_CHECK_HEADER([libusb-1.0/libusb.h],
 AC_CONFIG_FILES([fpga/ulx3s/Makefile fpga/ulx3s/pkt_comm/Makefile])
 
 ULX3S_SUBDIRS="fpga/ulx3s"
-ULX3S_LIBS="fpga/ulx3s/*.o fpga/ulx3s/pkt_comm/*.o -lusb-1.0"
+ULX3S_LIBS="fpga/ulx3s/device.o fpga/ulx3s/device_format.o fpga/ulx3s/inouttraffic.o fpga/ulx3s/jtr_device.o fpga/ulx3s/jtr_mask.o fpga/ulx3s/task.o fpga/ulx3s/ulx3s.o fpga/ulx3s/ulx3s_scan.o fpga/ulx3s/ulx3s_sn.o fpga/ulx3s/pkt_comm/*.o -lusb-1.0"
 
 fi
 
