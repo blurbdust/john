@@ -67,8 +67,41 @@ void ztex_init()
 #ifdef HAVE_FPGA_ULX3S
 void ulx3s_init()
 {
+
+	static int ulx3s_initialized;
+
+#ifdef HAVE_FUZZ
+	if (options.flags & FLG_FUZZ_CHK)
+		return;
+#endif
+
+	if (ulx3s_initialized)
+		return;
+
+	// Initialize [List.ULX3S:Devices] configuration section.
+	ulx3s_sn_init_conf_devices();
+
+	// Check -dev command-line option.
+	struct list_entry *entry;
 	int found_error = 0;
-	fprintf(stderr, "Error: we actually hit this\n");
-	found_error = 1;
+	for (entry = options.acc_devices->head; entry; entry = entry->next) {
+		if (ulx3s_sn_alias_is_valid(entry->data)) {
+			if (!ulx3s_sn_check_alias(entry->data))
+				found_error = 1;
+		}
+		else if (!ulx3s_sn_is_valid(entry->data)) {
+			fprintf(stderr, "Error: bad Serial Number '%s'\n", entry->data);
+			found_error = 1;
+		}
+	}
+	if (found_error)
+		error();
+
+	ulx3s_detect(options.acc_devices, &ulx3s_detected_list);
+	ulx3s_use_list = ulx3s_detected_list;
+	ulx3s_initialized = 1;
+
+	//fprintf(stderr, "Error: we actually hit this\n");
+	//found_error = 1;
 }
 #endif

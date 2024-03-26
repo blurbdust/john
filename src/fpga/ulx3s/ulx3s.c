@@ -28,7 +28,7 @@
 //
 //===============================================================
 
-int ULX3S_DEBUG = 0;
+int ULX3S_DEBUG = 1;
 
 #ifdef __GNUC__
 __attribute__ ((format (printf, 1, 2)))
@@ -147,6 +147,7 @@ int ulx3s_device_new(libusb_device *usb_dev, struct ulx3s_device **ulx3s_dev)
 		return result;
 	}
 
+	/*
 	// Ztex specific descriptor. Contains device type
 	result = ulx3s_get_descriptor(dev);
 	if (result < 0) {
@@ -173,6 +174,7 @@ int ulx3s_device_new(libusb_device *usb_dev, struct ulx3s_device **ulx3s_dev)
 	}
 	else
 		dev->num_of_fpgas = 1;
+	*/
 
 	*ulx3s_dev = dev;
 	return 0;
@@ -386,6 +388,7 @@ int ulx3s_select_fpga(struct ulx3s_device *dev, int num)
 // store in 'struct ulx3s_device'
 int ulx3s_get_descriptor(struct ulx3s_device *dev)
 {
+	/*
 	unsigned char buf[40];
 	int result = vendor_request(dev->handle, 0x22, 0, 0, buf, 40);
 	if (result < 0) {
@@ -410,6 +413,7 @@ int ulx3s_get_descriptor(struct ulx3s_device *dev)
 		dev->interfaceCapabilities[i] = buf[i+12];
 	for (i = 0; i < 12; i++)
 		dev->moduleReserved[i] = buf[i+18];
+	*/
 	return 0;
 }
 
@@ -424,7 +428,8 @@ int ulx3s_check_capability(struct ulx3s_device *dev, int i, int j)
 
 int ulx3s_firmware_is_ok(struct ulx3s_device *dev)
 {
-	return !strncmp("inouttraffic 1.0.0 JtR", dev->product_string, 22);
+	return 1;
+	//return !strncmp("inouttraffic 1.0.0 JtR", dev->product_string, 22);
 }
 
 // Scans for devices that aren't already in dev_list, adds them to new_dev_list
@@ -466,8 +471,8 @@ int ulx3s_scan_new_devices(struct ulx3s_dev_list *new_dev_list,
 			continue;
 		}
 
-		//if (ULX3S_DEBUG) printf("ulx3s_scan_new_devices: USB %04x %04x\n",
-		//		desc.idVendor, desc.idProduct);
+		if (ULX3S_DEBUG) printf("ulx3s_scan_new_devices: USB %04x %04x\n",
+				desc.idVendor, desc.idProduct);
 		if (desc.idVendor != ULX3S_IDVENDOR || desc.idProduct != ULX3S_IDPRODUCT)
 			continue;
 
@@ -490,6 +495,7 @@ int ulx3s_scan_new_devices(struct ulx3s_dev_list *new_dev_list,
 					break;
 				}
 			} else {
+				if (ULX3S_DEBUG) printf("ulx3s_scan_new_devices: num_fail_other++");
 				num_fail_other++;
 				break;
 			}
@@ -502,17 +508,18 @@ int ulx3s_scan_new_devices(struct ulx3s_dev_list *new_dev_list,
 			ulx3s_dev->snString, ulx3s_dev->productId[0],
 			ulx3s_dev->productId[1]);
 
-		// Free file descriptor ASAP
-		// only 1.15y devices supported for now
-		if (ulx3s_dev->productId[0] != 10 || ulx3s_dev->productId[1] != 15) {
+		if (ulx3s_dev->productId[0] != 117 || ulx3s_dev->productId[1] != 115) {
+			if (ULX3S_DEBUG) printf("Pid0+1 do not pass\n");
 			ulx3s_device_delete(ulx3s_dev);
 			continue;
 		}
 
 		if (dev_allow->count) {
+			if (ULX3S_DEBUG) printf("dev_allow->count: %d\n", dev_allow->count);
 			// The board may have SN of unsupported format if firmware is
 			// not uploaded - skip check, proceed to firmware upload.
 			if (!ulx3s_sn_is_valid(ulx3s_dev->snString_orig)) {
+				if (ULX3S_DEBUG) printf("SN not valid\n");
 				if (ulx3s_firmware_is_ok(ulx3s_dev)) {
 					// This shouldn't happen (maybe hardware problem)
 					fprintf(stderr, "Error: firmware_is_ok, SN is of "
@@ -533,9 +540,9 @@ int ulx3s_scan_new_devices(struct ulx3s_dev_list *new_dev_list,
 
 		result = libusb_claim_interface(ulx3s_dev->handle, 0);
 		if (result == LIBUSB_ERROR_BUSY) {
-			num_fail_busy++;
-			ulx3s_device_delete(ulx3s_dev);
-			continue;
+			//num_fail_busy++;
+			//ulx3s_device_delete(ulx3s_dev);
+			//continue;
 		} else if (result < 0) {
 			fprintf(stderr, "SN %s: usb_claim_interface error %d (%s)\n",
 				ulx3s_dev->snString, result,
@@ -577,6 +584,7 @@ int ulx3s_scan_new_devices(struct ulx3s_dev_list *new_dev_list,
 			"%d board(s): another instance of john running.\n",
 			num_fail_busy);
 
+	if (ULX3S_DEBUG) printf("ulx3s_scan_new_devices: ret count: %d\n", count);
 	return count;
 }
 
@@ -585,6 +593,7 @@ int ulx3s_scan_new_devices(struct ulx3s_dev_list *new_dev_list,
 // inouttraffic uses other approach: queries FPGA with VR 0x88 ( fpga_test_get_id() )
 int ulx3s_getFpgaState(struct ulx3s_device *dev, struct ulx3s_fpga_state *fpga_state)
 {
+	/*
 	unsigned char buf[9];
 	int result;
 
@@ -604,6 +613,7 @@ int ulx3s_getFpgaState(struct ulx3s_device *dev, struct ulx3s_fpga_state *fpga_s
 	fpga_state->fpgaChecksum = buf[1];
 	fpga_state->fpgaBytes = (buf[5] << 24) | (buf[4] << 16) | (buf[3] << 8) | buf[2];
 	fpga_state->fpgaInitB = buf[6];
+	*/
 	return 0;
 }
 
@@ -627,6 +637,7 @@ void ulx3s_swap_bits(unsigned char *buf, int len)
 
 int ulx3s_configureFpgaHS(struct ulx3s_device *dev, FILE *fp, int endpointHS)
 {
+	
 	int result;
 	struct ulx3s_fpga_state fpga_state;
 	if (ULX3S_DEBUG) {
@@ -634,7 +645,7 @@ int ulx3s_configureFpgaHS(struct ulx3s_device *dev, FILE *fp, int endpointHS)
 		printf("%s Start HS config: ", dev->snString);
 		ulx3s_printFpgaState(&fpga_state);
 	}
-
+	/*
 	const int transactionBytes = 65536;
 	unsigned char buf[transactionBytes];
 	int transferred;
@@ -679,7 +690,7 @@ int ulx3s_configureFpgaHS(struct ulx3s_device *dev, FILE *fp, int endpointHS)
 				dev->snString, result, libusb_error_name(result));
 		return result;
 	}
-
+	*/
 	return 0;
 }
 
@@ -760,6 +771,7 @@ static const int IHX_SIZE_MAX = 65536;
 
 int ihx_load_data(struct ihx_data *ihx_data, FILE *fp)
 {
+	/*
 	ihx_data->data = malloc(2*IHX_SIZE_MAX);
 	if (!ihx_data->data) {
 		ulx3s_error("ihx_load_data: malloc(%d) failed\n", 2*IHX_SIZE_MAX);
@@ -872,11 +884,13 @@ int ihx_load_data(struct ihx_data *ihx_data, FILE *fp)
 		ulx3s_error("ihx_load_data: no special record at end-of-file\n");
 		return -1;
 	}
+	*/
 	return 0;
 }
 
 int ulx3s_reset_cpu(struct ulx3s_device *dev, int r)
 {
+	/*
 	unsigned char buf[1] = { r };
 	int result = vendor_command(dev->handle, 0xA0, 0xE600, 0, buf, 1);
 	// Don't return error on r==0 && LIBUSB_ERROR_NO_DEVICE
@@ -890,11 +904,13 @@ int ulx3s_reset_cpu(struct ulx3s_device *dev, int r)
 				dev->snString, result);
 		return -1;
 	}
-	return 1;
+	*/
+	return -1; //normal is 1
 }
 
 int ulx3s_firmware_upload_ihx(struct ulx3s_device *dev, struct ihx_data *ihx_data)
 {
+	/*
 	const int transactionBytes = 4096;
 	unsigned char buf[transactionBytes];
 	int result;
@@ -961,11 +977,14 @@ int ulx3s_firmware_upload_ihx(struct ulx3s_device *dev, struct ihx_data *ihx_dat
 	//
 	//if (result < 0)
 	//	return -1;
+	*/
 	return 0;
 }
 
 int ulx3s_firmware_upload(struct ulx3s_device *dev, char *filename)
 {
+	printf("ulx3s_firmware_upload: skipping firmware upload\n");
+	/*
 	int result;
 	FILE *fp;
 	if ( !(fp = fopen(path_expand(filename), "r")) ) {
@@ -985,6 +1004,8 @@ int ulx3s_firmware_upload(struct ulx3s_device *dev, char *filename)
 
 	result = ulx3s_firmware_upload_ihx(dev, &ihx_data);
 	return result;
+	*/
+	return 0;
 }
 
 void ulx3s_device_reset(struct ulx3s_device *dev)

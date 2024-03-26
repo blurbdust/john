@@ -28,8 +28,8 @@
 // includes '\0' terminator
 #define ULX3S_PRODUCT_STRING_LEN 32
 
-#define ULX3S_IDVENDOR 0x221A
-#define ULX3S_IDPRODUCT 0x0100
+#define ULX3S_IDVENDOR 0x0403
+#define ULX3S_IDPRODUCT 0x6015
 
 #define ULX3S_ENDPOINT_HS 6
 

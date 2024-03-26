@@ -86,9 +86,10 @@ struct device *device_new(struct ulx3s_device *ulx3s_device)
 	if (!device)
 		return NULL;
 	device->ulx3s_device = ulx3s_device;
+	printf("ulx3s_device->num_of_fpgas: 0x%x\n", ulx3s_device->num_of_fpgas);
 	device->handle = ulx3s_device->handle;
-	device->num_of_fpgas = ulx3s_device->num_of_fpgas;
-	device->selected_fpga = ulx3s_device->selected_fpga;
+	device->num_of_fpgas = 1; //ulx3s_device->num_of_fpgas;
+	device->selected_fpga = 0; //ulx3s_device->selected_fpga;
 	device->num_of_valid_fpgas = 0;
 
 	int i;
@@ -99,7 +100,7 @@ struct device *device_new(struct ulx3s_device *ulx3s_device)
 		device->fpga[i].wr.io_state_valid = 0;
 		device->fpga[i].wr.io_state_timeout_count = 0;
 		device->fpga[i].wr.wr_count = 0;
-		device->fpga[i].rd.read_limit_valid = 0;
+		device->fpga[i].rd.read_limit_valid = 0; // crashes TODO
 		device->fpga[i].rd.read_count = 0;
 		device->fpga[i].rd.partial_read_count = 0;
 		device->fpga[i].cmd_count = 0;

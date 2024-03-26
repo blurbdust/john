@@ -19,6 +19,9 @@
 
 int ulx3s_sn_is_valid(char *sn)
 {
+	printf("ulx3s_sn_is_valid: skipping check\n");
+	return 1;
+	/*
 	int i;
 	for (i = 0; i < ULX3S_SNSTRING_LEN; i++) {
 		if (!sn[i])
@@ -29,6 +32,7 @@ int ulx3s_sn_is_valid(char *sn)
 	}
 
 	return 0;
+	*/
 }
 
 
