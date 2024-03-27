@@ -184,7 +184,8 @@ static int device_init_fpgas(struct device *device,
 
 		// Reset FPGA application with Global Set Reset (GSR)
 		// Affected is FPGA previously selected with fpga_select()
-		result = fpga_reset(device->handle);
+		//result = fpga_reset(device->handle);
+		result = 0;
 		if (result < 0) {
 			fprintf(stderr, "SN %s #%d: device_fpga_reset: %d (%s)\n",
 				device->ulx3s_device->snString,
@@ -391,6 +392,7 @@ int device_pkt_rw(struct device *device)
 			continue;
 		}
 
+		// TODO: @blurbdust we make it here now
 		// fpga_select(), fpga_get_io_state(), fpga_setup_output() in 1 USB request
 		result = fpga_select_setup_io(fpga);
 		if (result < 0) {

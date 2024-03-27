@@ -146,6 +146,8 @@ int ulx3s_device_new(libusb_device *usb_dev, struct ulx3s_device **ulx3s_dev)
 		ulx3s_device_delete(dev);
 		return result;
 	}
+	dev->num_of_fpgas = 1;
+	dev->selected_fpga = 0;
 
 	/*
 	// Ztex specific descriptor. Contains device type
@@ -366,6 +368,7 @@ int ulx3s_reset_fpga(struct ulx3s_device *dev)
 
 int ulx3s_select_fpga(struct ulx3s_device *dev, int num)
 {
+	printf("dev->num_of_fpgas: %d, num: %d\n", dev->num_of_fpgas, num);
 	if (dev->num_of_fpgas == 1 || num == dev->selected_fpga)
 		return 0;
 	if (num < 0 || num >= dev->num_of_fpgas) {
@@ -373,14 +376,15 @@ int ulx3s_select_fpga(struct ulx3s_device *dev, int num)
 				dev->snString, num);
 		return -1;
 	}
-	int result = vendor_command(dev->handle, 0x51, num, 0, NULL, 0);
+	/*int result = vendor_command(dev->handle, 0x51, num, 0, NULL, 0);
 	if (result < 0) {
 		ulx3s_error("SN %s: ulx3s_select_fpga() returns %d (%s)\n",
 				dev->snString, result, libusb_error_name(result));
 		return result;
 	}
+	*/
 	dev->selected_fpga = num;
-	return result;
+	return 0;
 }
 
 
@@ -495,7 +499,7 @@ int ulx3s_scan_new_devices(struct ulx3s_dev_list *new_dev_list,
 					break;
 				}
 			} else {
-				if (ULX3S_DEBUG) printf("ulx3s_scan_new_devices: num_fail_other++");
+				if (ULX3S_DEBUG) printf("ulx3s_scan_new_devices: num_fail_other++\n");
 				num_fail_other++;
 				break;
 			}
@@ -508,8 +512,8 @@ int ulx3s_scan_new_devices(struct ulx3s_dev_list *new_dev_list,
 			ulx3s_dev->snString, ulx3s_dev->productId[0],
 			ulx3s_dev->productId[1]);
 
-		if (ulx3s_dev->productId[0] != 117 || ulx3s_dev->productId[1] != 115) {
-			if (ULX3S_DEBUG) printf("Pid0+1 do not pass\n");
+		if (ulx3s_dev->productId[0] != 0 || ulx3s_dev->productId[1] != 0) {
+			if (ULX3S_DEBUG) printf("Pid0+1 do not pass; %d %d \n", ulx3s_dev->productId[0], ulx3s_dev->productId[1]);
 			ulx3s_device_delete(ulx3s_dev);
 			continue;
 		}

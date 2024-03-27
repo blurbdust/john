@@ -118,7 +118,7 @@ struct jtr_device_list *jtr_device_list_init()
 		}
 		libusb_initialized = 1;
 	}
-//ULX3S_DEBUG=1;
+ULX3S_DEBUG=1;
 //DEBUG = 1; // print I/O function calls
 //DEBUG = 2; // print all I/O data in hex
 PKT_DEBUG = 1; // print erroneous packets recieved from devices

@@ -88,9 +88,9 @@ struct device *device_new(struct ulx3s_device *ulx3s_device)
 	device->ulx3s_device = ulx3s_device;
 	printf("ulx3s_device->num_of_fpgas: 0x%x\n", ulx3s_device->num_of_fpgas);
 	device->handle = ulx3s_device->handle;
-	device->num_of_fpgas = 1; //ulx3s_device->num_of_fpgas;
-	device->selected_fpga = 0; //ulx3s_device->selected_fpga;
-	device->num_of_valid_fpgas = 0;
+	device->num_of_fpgas = ulx3s_device->num_of_fpgas;
+	device->selected_fpga = ulx3s_device->selected_fpga;
+	device->num_of_valid_fpgas = 1;
 
 	int i;
 	for (i = 0; i < device->num_of_fpgas; i++) {
@@ -100,7 +100,7 @@ struct device *device_new(struct ulx3s_device *ulx3s_device)
 		device->fpga[i].wr.io_state_valid = 0;
 		device->fpga[i].wr.io_state_timeout_count = 0;
 		device->fpga[i].wr.wr_count = 0;
-		device->fpga[i].rd.read_limit_valid = 0; // crashes TODO
+		//device->fpga[i].rd.read_limit_valid = 0; // crashes TODO
 		device->fpga[i].rd.read_count = 0;
 		device->fpga[i].rd.partial_read_count = 0;
 		device->fpga[i].cmd_count = 0;
@@ -304,6 +304,7 @@ int device_check_bitstream_type(struct device *device, unsigned short bitstream_
 	if (!device)
 		return -1;
 
+	return 1;
 	int i;
 	for (i = 0; i < device->num_of_fpgas; i++) {
 		int result;
@@ -454,6 +455,7 @@ int device_list_fpga_reset(struct device_list *device_list)
 // unlike ulx3s_select_fpga(), it waits for I/O timeout
 int fpga_select(struct fpga *fpga)
 {
+	return 0;
 	int result = vendor_command(fpga->device->handle, 0x8E, fpga->num,
 			0, NULL, 0);
 	fpga->cmd_count++;
@@ -494,6 +496,7 @@ int fpga_select_setup_io(struct fpga *fpga)
 int fpga_progclk_raw(struct fpga *fpga, int clk_num,
 		int d_value, int m_value)
 {
+	return 0;
 	int result = vendor_command(fpga->device->handle, 0x93,
 			fpga->num | clk_num << 8, d_value | m_value << 8, NULL, 0);
 	if (result < 0)
